@@ -17,21 +17,23 @@ import com.asdco.nas.dao.HeartbeatLog;
 public class Heartbeat implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	/* 
-	 * The @PersistenceContext JPA annotation without any arguments
-	 * tells the server to create an entity manager using the
-	 * default persistence unit "primary"
+
+	/*
+	 * The @PersistenceContext JPA annotation without any arguments tells the
+	 * server to create an entity manager using the default persistence unit
+	 * "primary"
 	 */
 	@PersistenceContext
 	EntityManager em;
 
-	/*
-	 * The @GET JAX-RS annotation without any arguments tells the
-	 * Heartbeat Controller to run this method for any HTTP GET requests
+	/**
+	 * Main endpoint for a server to call home. Just a regular HTTP GET call to
+	 * http://serverAddr/NasNexus/Heartbeat/
+	 * 
+	 * @return just an OK for now
 	 */
 	@GET
-	public String getOK() throws Exception {
+	public String getOK() {
 		HeartbeatLog entry = new HeartbeatLog();
 		entry.setServerId("20");
 		entry.setVisibleIP("20.20.20.20");
