@@ -7,5 +7,6 @@
 	<description>Classes that define tables that exist on the NasNexus database</description>
 	
 	<entity class="com.asdco.nas.dao.HeartbeatLog" />
+	<entity class="com.asdco.nas.dao.NasServer" />
 
 </entity-mappings>

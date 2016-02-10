@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class HeartbeatLog {
@@ -16,6 +17,7 @@ public class HeartbeatLog {
 	@Column(insertable = false, updatable = false)
 	Long id;
 
+	@Version
 	@Column(insertable = false, updatable = false)
 	Calendar logDate;
 

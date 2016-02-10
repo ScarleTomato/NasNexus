@@ -1,5 +1,7 @@
 package com.asdco.nas.util;
 
+import java.util.Calendar;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -20,12 +22,12 @@ public class HeartbeatUtil {
 	 * @return a command
 	 */
 	public String receiveHeartbeat(String serverId, String visibleAddress) {
-		logHeartbeat(serverId, visibleAddress);
+		Calendar logDate = logHeartbeat(serverId, visibleAddress);
 
-		return "OK server " + serverId + " at " + visibleAddress + ". No commands";
+		return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". No commands";
 	}
 
-	private void logHeartbeat(String serverId, String visibleAddress) {
+	private Calendar logHeartbeat(String serverId, String visibleAddress) {
 		//create a new heartbeat log entry
 		HeartbeatLog entry = new HeartbeatLog();
 
@@ -37,5 +39,7 @@ public class HeartbeatUtil {
 
 		//save it to the database
 		jpaUtil.persist(entry);
+		
+		return entry.getLogDate();
 	}
 }

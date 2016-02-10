@@ -11,21 +11,16 @@ import com.asdco.nas.util.HeartbeatUtil;
 
 //The @Path JAX-RS annotation tells the server to look at this controller if anyone hits up "http://serverAddress/Heartbeat" 
 @Path(value = "/Heartbeat")
-public class Heartbeat {
+public class HeartbeatRest {
 
 	@Inject
 	HeartbeatUtil util;
 
 	/**
-	 * Main endpoint for a server to call home. An HTTP GET call to
-	 * http://serverAddress/NasNexus/Heartbeat/whateverIdTheServerIs
-	 * 
-	 * @return just an OK for now
+	 * see {@link HeartbeatUtil#receiveHeartbeat(String, String)}
 	 */
-	@GET
-	@Path("{serverId}")
-	public String getOK(@PathParam("serverId") String serverId, @Context HttpServletRequest request) {
-
+	@GET @Path("{serverId}")
+	public String receiveHeartbeat(@PathParam("serverId") String serverId, @Context HttpServletRequest request) {
 		return util.receiveHeartbeat(serverId, request.getRemoteHost());
 	}
 }
