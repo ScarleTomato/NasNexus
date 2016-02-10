@@ -1,5 +1,6 @@
 package com.asdco.nas.dao;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -12,11 +13,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 
 @NamedQueries({
-	@NamedQuery(name="NasServer.findAll", query="from NasServer")
+	@NamedQuery(name="NasServer.findAll", query="from Servers")
 })
 @Entity(name="Servers")
-public class NasServer {
-	
+public class NasServer implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(insertable = false, updatable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
