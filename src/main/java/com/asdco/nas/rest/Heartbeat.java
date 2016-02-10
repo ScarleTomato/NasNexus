@@ -5,8 +5,11 @@ import java.io.Serializable;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 
 import com.asdco.nas.dao.HeartbeatLog;
 
@@ -27,17 +30,25 @@ public class Heartbeat implements Serializable {
 	EntityManager em;
 
 	/**
-	 * Main endpoint for a server to call home. Just a regular HTTP GET call to
-	 * http://serverAddr/NasNexus/Heartbeat/
+	 * Main endpoint for a server to call home. An HTTP GET call to
+	 * http://serverAddress/NasNexus/Heartbeat/whateverIdTheServerIs
 	 * 
 	 * @return just an OK for now
 	 */
-	@GET
-	public String getOK() {
+	@GET @Path("{serverId}")
+	public String getOK(@PathParam("serverId") String serverId, @Context HttpServletRequest request) {
+		//create a new heartbeat log entry
 		HeartbeatLog entry = new HeartbeatLog();
-		entry.setServerId("20");
-		entry.setVisibleIP("20.20.20.20");
+		
+		//add the server id that was provided by the client in the GET request path
+		entry.setServerId(serverId);
+	    
+		//add the address that the request came from
+		entry.setVisibleIP(request.getRemoteHost());
+
+		//save it to the database
 		em.persist(entry);
-		return "OK";
+		
+		return "OK server " + serverId + " at " + request.getRemoteHost();
 	}
 }
