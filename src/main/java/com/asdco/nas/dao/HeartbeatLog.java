@@ -24,6 +24,7 @@ public class HeartbeatLog {
 	@Column
 	String serverId;
 
+	//comment
 	@Column
 	String visibleIP;
 
