@@ -31,11 +31,11 @@ public class NasServerUtil {
 
 
 	
-	@GET @Path("/add/{somethingElse}")
-	public String addServer(@PathParam("somethingElse")String pickSomething) {
-		NasServer newServer = new NasServer();
-		newServer.setName(pickSomething);
-		return "The server "+pickSomething+" has been added.";
+	@GET @Path("/add/{Name}")
+	public String addServer(@PathParam("Name")String name) {
+		NasServer entry = new NasServer();
+		return (registerServer(entry));
+		//return "The server "+name+" has been added. Server ID is .";
 	}
 
 	public List<NasServer> getAllServers() {
