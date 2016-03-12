@@ -1,6 +1,6 @@
 package com.asdco.nas.rest;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Calendar;
 
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ public class NasServerRest {
 	}
 	Im trying to get it so that the server will read the ServerId and output the serverId in the text.
 	**/
-	
+
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -41,26 +41,8 @@ public class NasServerRest {
 		return util.getAllServers();
 	}
 	
-	private Long NasServer(Long serverId) {
-		//create a new NasServer entry
-		NasServer entry = new NasServer();
 
-		//add the server id that was provided by the client in the GET request e
-		entry.setId(serverId);
 
-		//save it to the database
-		jpaUtil.persist(entry);
-		
-		return entry.getId();
-	}
-	
-	@GET @Path("/add/{ServerId}")
-	public String addServer(Long serverId) {
-		NasServer.setId(serverId);
-		return "The server"+serverId+" has been added.";
-	}
-
-	
 	@PUT @Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String registerServer(final NasServer newServer) {

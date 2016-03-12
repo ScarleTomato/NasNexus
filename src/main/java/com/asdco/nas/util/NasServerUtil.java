@@ -1,13 +1,20 @@
 package com.asdco.nas.util;
 
+
 import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import com.asdco.nas.dao.HeartbeatLog;
 import com.asdco.nas.dao.NasServer;
 
+@Path(value = "/Servers")// Adding this line from NasServerRest now returns a responce. I was getting 'Could not find resource for full path' Error.
 public class NasServerUtil {
 	
 	@Inject
@@ -20,17 +27,15 @@ public class NasServerUtil {
 		return "Your server id is " + newServer.getId();
 	}
 	
-	private Long NasServer(Long serverId) {
-		//create a new server entry
-		NasServer entry = new NasServer();
 
-		//add the server id that was provided by the client in the GET request e
-		entry.setId(serverId);
 
-		//save it to the database
-		jpaUtil.persist(entry);
-		
-		return entry.getId();
+
+	
+	@GET @Path("/add/{somethingElse}")
+	public String addServer(@PathParam("somethingElse")String pickSomething) {
+		NasServer newServer = new NasServer();
+		newServer.setName(pickSomething);
+		return "The server "+pickSomething+" has been added.";
 	}
 
 	public List<NasServer> getAllServers() {
