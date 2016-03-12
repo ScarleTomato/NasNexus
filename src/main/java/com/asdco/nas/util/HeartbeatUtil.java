@@ -31,7 +31,7 @@ public class HeartbeatUtil {
 		//create a new heartbeat log entry
 		HeartbeatLog entry = new HeartbeatLog();
 
-		//add the server id that was provided by the client in the GET request path
+		//add the server id that was provided by the client in the GET request e
 		entry.setServerId(serverId);
 
 		//add the address that the request came from
