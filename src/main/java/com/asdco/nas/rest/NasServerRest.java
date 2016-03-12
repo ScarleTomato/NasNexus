@@ -24,7 +24,13 @@ public class NasServerRest {
 	public List<NasServer> getAllServers() {
 		return util.getAllServers();
 	}
+	
+	@GET @Path("/add")
+	public String addServer() {
+		return "Server has been added.";
+	}
 
+	
 	@PUT @Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String registerServer(final NasServer newServer) {
