@@ -13,7 +13,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 
 @NamedQueries({
-	@NamedQuery(name="NasServer.findAll", query="from Servers")
+	@NamedQuery(name="NasServer.findAll", query="select s from Servers s"),
+	@NamedQuery(name="NasServer.findByName", query="select s from Servers s where s.name=:name")
 })
 @Entity(name="Servers")
 public class NasServer implements Serializable {

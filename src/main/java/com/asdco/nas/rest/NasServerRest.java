@@ -9,7 +9,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 
 import com.asdco.nas.dao.HeartbeatLog;
 import com.asdco.nas.dao.NasServer;
@@ -24,21 +27,17 @@ public class NasServerRest {
 	@Inject
 	JpaUtil jpaUtil;
 	
-	/**private Calendar NasServer(String serverId) {
-		//create a new Server entry log entry
-		logNasServer entry = new logNasServer();
-
-		//add the server id that was provided by the client in the GET request e
-		entry.setServerId(serverId);
-	}
-	Im trying to get it so that the server will read the ServerId and output the serverId in the text.
-	**/
-
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<NasServer> getAllServers() {
 		return util.getAllServers();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getServerId")
+	public String getServerIdByName(@QueryParam("name") String name,@QueryParam("ksubsd") String randomString) {
+		return "Hello "+ name+ " and "+ randomString;
 	}
 	
 
