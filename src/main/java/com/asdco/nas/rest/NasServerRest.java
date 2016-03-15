@@ -2,12 +2,14 @@ package com.asdco.nas.rest;
 
 import java.util.List; 
 import java.util.Calendar;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -36,15 +38,23 @@ public class NasServerRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getServerId")
-	public String getServerIdByName(@QueryParam("name") String name,@QueryParam("ksubsd") String randomString) {
-		return "Hello "+ name+ " and "+ randomString;
+	public String getServerIdByName(@QueryParam("name") String name) {
+		
+		
+		NasServer namedServer = util.getServerByName(name);
+		namedServer.getId();
+		return NasServer.namedServer(getName);
 	}
 	
 
 
-	@PUT @Path("/register")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String registerServer(final NasServer newServer) {
+	
+	@GET @Path("/register/{serverId}")
+	public String registerServer(@PathParam("serverId") String name) {
+		NasServer newServer = new NasServer();
+		newServer.setName(name);
 		return util.registerServer(newServer);
 	}
+	
+	
 }
