@@ -33,7 +33,7 @@ public class NasServerUtil {
 	public NasServer getServerByName (String name){
 		List<NasServer> serverList;
 		HashMap<String, Object> requestedName = new HashMap<String, Object>();
-		requestedName.put(, name)
+		requestedName.put("name",name);
 		serverList = jpaUtil.executeGetNamedQuery ("NasServer.findByName",requestedName,NasServer.class);
 		return serverList.get(0);
 	}

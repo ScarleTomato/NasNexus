@@ -42,8 +42,10 @@ public class NasServerRest {
 		
 		
 		NasServer namedServer = util.getServerByName(name);
-		namedServer.getId();
-		return NasServer.namedServer(getName);
+		Long serverId = namedServer.getId();
+		String s = String.valueOf(serverId);
+		
+		return "The server Id for "+name+" is "+s;
 	}
 	
 
