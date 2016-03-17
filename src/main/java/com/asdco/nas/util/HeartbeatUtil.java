@@ -23,8 +23,11 @@ public class HeartbeatUtil {
 	 */
 	public String receiveHeartbeat(String serverId, String visibleAddress) {
 		Calendar logDate = logHeartbeat(serverId, visibleAddress);
+		/**Get # of cmds for serverId as numOfCmds\
+		 * First need to post cmds to the DB
+		**/
 
-		return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". No commands";
+		return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". Number of commands: ";
 	}
 
 	private Calendar logHeartbeat(String serverId, String visibleAddress) {
