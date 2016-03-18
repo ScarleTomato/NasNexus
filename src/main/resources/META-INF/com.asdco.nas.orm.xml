@@ -8,5 +8,6 @@
 	
 	<entity class="com.asdco.nas.dao.HeartbeatLog" />
 	<entity class="com.asdco.nas.dao.NasServer" />
+	<entity class="com.asdco.nas.dao.ServerCommand" />
 
 </entity-mappings>

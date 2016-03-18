@@ -1,22 +1,15 @@
 package com.asdco.nas.rest;
 
-import java.util.List; 
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 
-import com.asdco.nas.dao.HeartbeatLog;
 import com.asdco.nas.dao.NasServer;
 import com.asdco.nas.util.JpaUtil;
 import com.asdco.nas.util.NasServerUtil;
@@ -24,6 +17,7 @@ import com.asdco.nas.util.NasServerUtil;
 @Path(value = "/Servers")
 public class NasServerRest {
 	
+	private static final String THE_SERVER_ID_FOR = "The server Id for ";
 	@Inject
 	NasServerUtil util;
 	@Inject
@@ -45,7 +39,7 @@ public class NasServerRest {
 		Long serverId = namedServer.getId();
 		String s = String.valueOf(serverId);
 		
-		return "The server Id for "+name+" is "+s;
+		return THE_SERVER_ID_FOR+name+" is "+s;
 	}
 	
 
@@ -57,6 +51,9 @@ public class NasServerRest {
 		newServer.setName(name);
 		return util.registerServer(newServer);
 	}
+	
+	
+
 	
 	
 }

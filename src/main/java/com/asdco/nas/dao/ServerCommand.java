@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,41 +11,48 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 
+
 @NamedQueries({
-	@NamedQuery(name="NasServer.findAll", query="select s from Servers s"),
-	@NamedQuery(name="NasServer.findByName", query="select s from Servers s where s.name=:name")
+	@NamedQuery(name="ServerCommand.findAll", query="select s from ServerCommand s"),
+	@NamedQuery(name="ServerCommand.findByName", query="select s from ServerCommand s where s.name=:name")
 	
 })
-@Entity(name="Servers")
-public class NasServer implements Serializable {
 
+public class ServerCommand implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 
+	
+	/**
+	 * ID
+	 * cmdName
+	 * date created
+	 * 
+	**/
+	
+	
 	@Id
 	@Column(insertable = false, updatable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	Long id;
-
+	Long cmdId;
+	
 	@Column
 	String name;
-
-	@Column
-	String address;
-
-	@Column
-	String description;
-
+	
 	@Version
 	@Column(insertable = false, updatable = false)
 	Calendar createdDate;
 	
 
+	@Column
+	String action;
+	
 	public Long getId() {
-		return id;
+		return cmdId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.cmdId = id;
 	}
 
 	public String getName() {
@@ -57,27 +63,26 @@ public class NasServer implements Serializable {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public Calendar getLogDate() {
+		return logDate;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setLogDate(Calendar logDate) {
+		this.logDate = logDate;
+	}
+	
+	public String getAction() {
+		return action;
 	}
 
-	public String getDescription() {
-		return description;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	Calendar logDate;
+	
+	
+	
+	
 
-	public Calendar getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Calendar createdDate) {
-		this.createdDate = createdDate;
-	}
 }
