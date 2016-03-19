@@ -1,21 +1,10 @@
 package com.asdco.nas.rest;
 
-import javax.inject.Inject; 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Version;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,8 +13,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.asdco.nas.dao.ServerCommand;
-import com.asdco.nas.util.JpaUtil;
-import com.asdco.nas.util.NasServerUtil;
 import com.asdco.nas.util.ServerCommandUtil;
 
 

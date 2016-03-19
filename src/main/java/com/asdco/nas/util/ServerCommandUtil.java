@@ -4,13 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.Entity;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
-import com.asdco.nas.dao.NasServer;
-import com.asdco.nas.util.JpaUtil;
 import com.asdco.nas.dao.ServerCommand;
 
 
