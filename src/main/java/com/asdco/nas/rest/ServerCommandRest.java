@@ -52,15 +52,21 @@ public class ServerCommandRest{
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addMaster")
 	public String addMasterCommand(@QueryParam("name") String name){
-		//see if cmd "name" exists 
-		
-		return "The master server command "+name+" has been added. Command ID is "+ util.getCommandByName(name);
+		ServerCommand newCommand = new ServerCommand();
+		newCommand.setName(name);
+		ServerCommand existingcommand = util.getCommandByName(name);
+		if (newCommand.getId() != existingcommand.getId()){return util.registerMasterCommand(newCommand);}
+		else{return "This command already exists.";}
 	}
 	
 	
 	
-	//getMasterlist
-	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/masterList")
+	public List<ServerCommand> getMasterList(){
+		return util.getMasterList();
+	}
 	//add command for server
 	/**
 	 * 

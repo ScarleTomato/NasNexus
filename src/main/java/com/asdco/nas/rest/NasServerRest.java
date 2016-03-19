@@ -25,6 +25,7 @@ public class NasServerRest {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/listAll")
 	public List<NasServer> getAllServers() {
 		return util.getAllServers();
 	}
