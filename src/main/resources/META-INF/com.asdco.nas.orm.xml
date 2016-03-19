@@ -7,6 +7,7 @@
 	<description>Classes that define tables that exist on the NasNexus database</description>
 	
 
+	<entity class="com.asdco.nas.dao.CommandStatus" />
 	<entity class="com.asdco.nas.dao.ServerCommand" />
 	<entity class="com.asdco.nas.dao.HeartbeatLog" />
 	<entity class="com.asdco.nas.dao.NasServer" />

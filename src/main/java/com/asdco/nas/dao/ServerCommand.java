@@ -46,11 +46,11 @@ public class ServerCommand implements Serializable{
 	
 	@Version
 	@Column(insertable = false, updatable = false)
-	Calendar logDate;
+	Calendar createdDate;
 	
 
 	@Column
-	String action;
+	String description;
 	
 	public Long getId() {
 		return id;
@@ -69,19 +69,19 @@ public class ServerCommand implements Serializable{
 	}
 
 	public Calendar getLogDate() {
-		return logDate;
+		return createdDate;
 	}
 
 	public void setLogDate(Calendar logDate) {
-		this.logDate = logDate;
+		this.createdDate = logDate;
 	}
 	
 	public String getAction() {
-		return action;
+		return description;
 	}
 
 	public void setAction(String action) {
-		this.action = action;
+		this.description = action;
 	}
 
 	

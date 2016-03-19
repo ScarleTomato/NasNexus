@@ -2,7 +2,9 @@ package com.asdco.nas.rest;
 
 import javax.inject.Inject; 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import com.asdco.nas.util.NasServerUtil;
 import com.asdco.nas.util.ServerCommandUtil;
 
 
-@Path(value = "/Command")
+@Path(value = "/Master")
 public class ServerCommandRest{
 	/**
 	 * 
@@ -54,9 +56,10 @@ public class ServerCommandRest{
 	public String addMasterCommand(@QueryParam("name") String name){
 		ServerCommand newCommand = new ServerCommand();
 		newCommand.setName(name);
-		ServerCommand existingcommand = util.getCommandByName(name);
-		if (newCommand.getId() != existingcommand.getId()){return util.registerMasterCommand(newCommand);}
-		else{return "This command already exists.";}
+		Calendar createdDate = new GregorianCalendar();
+		newCommand.setLogDate(createdDate);
+		return util.registerMasterCommand(newCommand);
+		
 	}
 	
 	
