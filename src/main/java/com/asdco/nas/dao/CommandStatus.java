@@ -2,10 +2,18 @@ package com.asdco.nas.dao;
 
 import java.util.Calendar;
 
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name="CommandStatus.findByNasServerId", query="select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0")
+	
+})
 
 public class CommandStatus {
 	@Id

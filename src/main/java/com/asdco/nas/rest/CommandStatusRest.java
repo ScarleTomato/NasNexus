@@ -2,10 +2,12 @@ package com.asdco.nas.rest;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -32,7 +34,7 @@ public class CommandStatusRest {
 	@Inject
 	ServerCommandUtil serverCommandUtil;
 	/**
-	 * new cmd for server
+	 * add cmd for server
 	 * get cmd list (all) for server
 	 * get cmd list (active) for server
 	 * get cmd list (done) for server
@@ -53,12 +55,24 @@ public class CommandStatusRest {
 		newCommand.setCmdCreationDate(calendar);
 		newCommand.setNasServerId(affectedServer.getId());
 		//persist the cmd to CommandStatus
-			return util.registerCommandStatus(newCommand);
+			return util.registerCommandStatus(newCommand)+" CmdId"+newCommand.getId()+" ServerId"+newCommand.getNasServerId()+" Command description: "+command.getAction();
 		//return "Hello World"+affectedServer.getName()+","+command.getName();
 	}
 	//get cmd list (all) for server
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/list")
+	public List getCommands(@QueryParam("serverId") Long serverId){
+		return util.getCommandList(serverId);
+	}
+
+	
 	//get cmd list (active) for server
 	//get cmd list (done) for server
 	//get list of servers with cmds / where cmdIsDone == 0
+	
+	//Get next command.
+	
+	
 
 }

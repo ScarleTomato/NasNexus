@@ -1,0 +1,20 @@
+Command Tree
+
+Command tree for the 'Client'
+
+NasNexus
+	/Command /* CommandStatusRest
+		/?server="server"&commandName="command"
+		/list/?serverName="serverName"
+
+	/Heartbeat /* HeartBeatRest
+
+	/Master /* ServerCommandRest
+		/addMaster/?name="name"
+		/masterList
+		/AddCommand
+		
+	/Servers /* NasServerRest
+		/listAll
+		/register/?name="serverName"
+

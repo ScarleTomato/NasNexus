@@ -24,7 +24,7 @@ public class NasServerRest {
 	JpaUtil jpaUtil;
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_XML)
 	@Path("/listAll")
 	public List<NasServer> getAllServers() {
 		return util.getAllServers();
@@ -46,8 +46,8 @@ public class NasServerRest {
 
 
 	
-	@GET @Path("/register/{serverId}")
-	public String registerServer(@PathParam("serverId") String name) {
+	@GET @Path("/register/{serverName}")
+	public String registerServer(@PathParam("serverName") String name) {
 		NasServer newServer = new NasServer();
 		newServer.setName(name);
 		return util.registerServer(newServer);

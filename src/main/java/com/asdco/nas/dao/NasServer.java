@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQueries({
 	@NamedQuery(name="NasServer.findAll", query="select s from Servers s"),
@@ -18,6 +19,7 @@ import javax.persistence.Version;
 	
 })
 @Entity(name="Servers")
+@XmlRootElement
 public class NasServer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
