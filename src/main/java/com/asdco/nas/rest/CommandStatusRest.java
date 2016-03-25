@@ -25,8 +25,7 @@ public class CommandStatusRest {
 	@Inject
 	CommandStatusUtil util;
 	
-	@Inject
-	JpaUtil jpaUtil;
+
 
 	@Inject
 	NasServerUtil nasServerUtil;
@@ -46,17 +45,7 @@ public class CommandStatusRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String addCommand(@QueryParam("server") String server,@QueryParam("command") String commandName){
-		//objects needed, NasServer, CmdId
-		NasServer affectedServer = nasServerUtil.getServerByName(server); 
-		ServerCommand command = serverCommandUtil.getCommandByName(commandName);
-		CommandStatus newCommand = new CommandStatus();
-		newCommand.setCmdId(command.getId());
-		Calendar calendar = new GregorianCalendar();
-		newCommand.setCmdCreationDate(calendar);
-		newCommand.setNasServerId(affectedServer.getId());
-		//persist the cmd to CommandStatus
-			return util.registerCommandStatus(newCommand)+" CmdId"+newCommand.getId()+" ServerId"+newCommand.getNasServerId()+" Command description: "+command.getAction();
-		//return "Hello World"+affectedServer.getName()+","+command.getName();
+			return util.addCommand(server, commandName); 
 	}
 	//get cmd list (all) for server
 	@GET
@@ -65,7 +54,14 @@ public class CommandStatusRest {
 	public List getCommands(@QueryParam("serverId") Long serverId){
 		return util.getCommandList(serverId);
 	}
-
+	//next cmd 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/next")
+	public String next(@QueryParam("server") String serverName){
+		return util.getNextCommand(serverName);
+	}
+	//cmd compleat
 	
 	//get cmd list (active) for server
 	//get cmd list (done) for server
