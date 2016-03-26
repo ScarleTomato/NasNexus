@@ -6,6 +6,7 @@ NasNexus
 	/Command /* CommandStatusRest
 		/?server="server"&commandName="command"
 		/list/?serverName="serverName"
+		/next/?serverId="serverId"L
 
 	/Heartbeat /* HeartBeatRest
 
@@ -16,6 +17,6 @@ NasNexus
 		
 	/Servers /* NasServerRest
 		/listAll
-		/register/?name="serverName"
+		/register/"serverName"
 
 -

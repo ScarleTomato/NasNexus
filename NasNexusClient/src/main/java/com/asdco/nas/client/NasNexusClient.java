@@ -7,7 +7,7 @@ public class NasNexusClient {
 	
 	public int sendHeartbeat() {
 		System.out.println("Sending heartbeat...");
-		System.out.println(httpClient.get("http://localhost:8080/NasNexus/Heartbeat/20"));
+		System.out.println(httpClient.get("http://localhost:8080/NasNexus/Heartbeat/10"));
 		return 0;
 	}
 }

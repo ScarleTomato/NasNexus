@@ -36,28 +36,38 @@ public class CommandStatusUtil {
 		commandList = jpaUtil.executeGetNamedQuery("CommandStatus.findByNasServerId", commandsForServer, CommandStatus.class);
 		return commandList;
 	}
+	
+	public long getNumberOfCommands(Long serverId){
+		List<CommandStatus> list = getCommandList(serverId);
+		return list.size();
+	}
 		
 	public String addCommand(String server,String commandName){
-	//objects needed, NasServer, CmdId
-	NasServer affectedServer = nasServerUtil.getServerByName(server); 
-	ServerCommand command = serverCommandUtil.getCommandByName(commandName);
-	CommandStatus newCommand = new CommandStatus();
-	newCommand.setCmdId(command.getId());
-	Calendar calendar = new GregorianCalendar();
-	newCommand.setCmdCreationDate(calendar);
-	newCommand.setNasServerId(affectedServer.getId());
-	//persist the cmd to CommandStatus
+		NasServer affectedServer = nasServerUtil.getServerByName(server); 
+		ServerCommand command = serverCommandUtil.getCommandByName(commandName);
+		CommandStatus newCommand = new CommandStatus();
+		newCommand.setCmdId(command.getId());
+		Calendar calendar = new GregorianCalendar();
+		newCommand.setCmdCreationDate(calendar);
+		newCommand.setNasServerId(affectedServer.getId());
 		return registerCommandStatus(newCommand);
 }
 	public String getNextCommand(String serverName){
 		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
 		Long serverId = affectedServer.getId();
 		List <CommandStatus> listOfCommands = getCommandList(serverId);
+		if(listOfCommands.size() != 0){
 		CommandStatus nextCommand = listOfCommands.get(0);
-		return "next commands is: "+nextCommand+".";
+		return "next command for "+serverName+" is: "+nextCommand.getCmdId()+". Unique command Id is: "+nextCommand.getId();}
+		else{return "No current next command";}
 		
 	}
 	
+	public String complete(Long commandId){
+		return ""; 
+		
+		
+	}
 	
 
 }

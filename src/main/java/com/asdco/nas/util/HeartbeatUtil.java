@@ -12,6 +12,8 @@ public class HeartbeatUtil {
 
 	@Inject
 	JpaUtil jpaUtil;
+	@Inject
+	CommandStatusUtil CommandStatusUtil;
 
 	/**
 	 * Receive a heart beat from a NAS server and let the server know if there
@@ -23,11 +25,11 @@ public class HeartbeatUtil {
 	 */
 	public String receiveHeartbeat(String serverId, String visibleAddress) {
 		Calendar logDate = logHeartbeat(serverId, visibleAddress);
+		 long l = Long.parseLong(serverId);
 		/**Get # of cmds for serverId as numOfCmds\
 		 * First need to post cmds to the DB
 		**/
-
-		return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". Number of commands: ";
+		return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". Number of commands: "+CommandStatusUtil.getNumberOfCommands(l);
 	}
 
 	private Calendar logHeartbeat(String serverId, String visibleAddress) {

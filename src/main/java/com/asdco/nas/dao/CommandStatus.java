@@ -12,8 +12,7 @@ import javax.persistence.NamedQuery;
 
 @NamedQueries({
 	@NamedQuery(name="CommandStatus.findByNasServerId", query="select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0")
-	//@NamedQuery(name="CommandStatus.getCommands",query="select s from CommandStatus s where ")
-	
+	//@NamedQuery(name="CommandStatus.findByUniqueCommandId",query="select s from CommandStatus s where s.Id=:commandId")
 })
 
 public class CommandStatus {
