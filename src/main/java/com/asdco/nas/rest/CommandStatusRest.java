@@ -18,8 +18,6 @@ public class CommandStatusRest {
 	@Inject
 	CommandStatusUtil util;
 	
-
-
 	@Inject
 	NasServerUtil nasServerUtil;
 	
@@ -60,7 +58,5 @@ public class CommandStatusRest {
 		return util.complete(commandId);
 		
 	}
-	
-	
 
 }

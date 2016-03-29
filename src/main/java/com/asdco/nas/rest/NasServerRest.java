@@ -24,7 +24,7 @@ public class NasServerRest {
 	JpaUtil jpaUtil;
 	
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/listAll")
 	public List<NasServer> getAllServers() {
 		return util.getAllServers();

@@ -17,6 +17,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.asdco.nas.util.JsonUtil;
+
 public class HttpClient {
 	DefaultHttpClient httpClient = new DefaultHttpClient();
 	
@@ -25,16 +27,18 @@ public class HttpClient {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpResponse response = execute(httpRequest);
 		System.out.println(toString(response.getEntity()));
-		return response.getStatusLine().toString();
+		//JsonUtil.fromJsonString(response, HeartbeatLog);
+		return toString(response.getEntity());
 	}
 	
 	public String put(String url, Serializable object) {
 		HttpPut httpRequest = new HttpPut(url);
 		System.out.println(toString(createEntity(object)));
-//		httpRequest.setEntity(createEntity(object));
-//		HttpResponse response = execute(httpRequest);
-//		System.out.println(toString(response.getEntity()));
-		return ""; //response.getStatusLine().toString();
+		httpRequest.setEntity(createEntity(object));
+		HttpResponse response = execute(httpRequest);
+		System.out.println(toString(response.getEntity())); 
+		response.getStatusLine().toString();
+		return "";
 	}
 	
 	private HttpEntity createEntity(Object object) {

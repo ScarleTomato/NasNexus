@@ -1,6 +1,6 @@
 package com.asdco.nas.util;
 
-import java.util.Calendar;
+import java.util.Calendar; 
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import com.asdco.nas.dao.CommandStatus;
 import com.asdco.nas.dao.NasServer;
 import com.asdco.nas.dao.ServerCommand;
+import com.asdco.nas.dto.CommandStatusResponse;
 
 
 public class CommandStatusUtil {
@@ -23,6 +24,9 @@ public class CommandStatusUtil {
 	
 	@Inject
 	ServerCommandUtil serverCommandUtil;
+	
+	@Inject
+	CommandStatusResponse CommandStatusResponse;
 	
 	public String registerCommandStatus(CommandStatus commandToRegister){
 		jpaUtil.persist(commandToRegister);
@@ -58,7 +62,8 @@ public class CommandStatusUtil {
 		List <CommandStatus> listOfCommands = getCommandList(serverId);
 		if(listOfCommands.size() != 0){
 		CommandStatus nextCommand = listOfCommands.get(0);
-		return "next command for "+serverName+" is: "+nextCommand.getCmdId()+". Unique command Id is: "+nextCommand.getId();}
+		//return "next command for "+serverName+" is: "+nextCommand.getCmdId()+". Unique command Id is: "+nextCommand.getId();}
+		return nextCommand.getCmdId()+":"+nextCommand.getId();}
 		else{return "No current next command";}
 		
 	}
@@ -67,6 +72,18 @@ public class CommandStatusUtil {
 		return ""; 
 		
 		
+	}
+	public CommandStatusResponse buildBean(CommandStatus c){
+		CommandStatusResponse b = new CommandStatusResponse();
+		b.setId(c.getId());
+		b.setNasServerId(c.getNasServerId());
+		b.setCmdId(c.getCmdId());
+		b.setCmdIsDone(c.getCmdIsDone());
+		b.setCmdCreationDate(c.getCmdCreationDate());
+		b.setServerRetrievedCmd(c.getServerRetrievedCmd());
+		b.setServerCompleatedCmd(c.getServerCompleatedCmd());
+		
+		return b;
 	}
 	
 

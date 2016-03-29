@@ -1,11 +1,14 @@
 package com.asdco.nas.util;
 
-import java.util.Calendar;
+import java.util.Calendar; 
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+
+import com.asdco.nas.dao.CommandStatus;
 import com.asdco.nas.dao.HeartbeatLog;
+import com.asdco.nas.dto.HeartbeatResponse;
 
 @ApplicationScoped
 public class HeartbeatUtil {
@@ -23,13 +26,15 @@ public class HeartbeatUtil {
 	 * @param visibleAddress
 	 * @return a command
 	 */
+
 	public String receiveHeartbeat(String serverId, String visibleAddress) {
 		Calendar logDate = logHeartbeat(serverId, visibleAddress);
 		 long l = Long.parseLong(serverId);
 		/**Get # of cmds for serverId as numOfCmds\
 		 * First need to post cmds to the DB
 		**/
-		return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". Number of commands: "+CommandStatusUtil.getNumberOfCommands(l);
+		//return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". Number of commands: "+CommandStatusUtil.getNumberOfCommands(l);
+		 return ""+CommandStatusUtil.getNumberOfCommands(l);
 	}
 
 	private Calendar logHeartbeat(String serverId, String visibleAddress) {
@@ -46,5 +51,13 @@ public class HeartbeatUtil {
 		jpaUtil.persist(entry);
 		
 		return entry.getLogDate();
+	}
+	
+	public HeartbeatResponse buildBean(HeartbeatLog c){
+		HeartbeatResponse b = new HeartbeatResponse();
+		b.setId(c.getId());
+		b.setLogDate(c.getLogDate());
+		
+		return b;
 	}
 }

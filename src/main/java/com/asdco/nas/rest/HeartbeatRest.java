@@ -5,8 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
+import com.asdco.nas.dto.HeartbeatResponse;
 import com.asdco.nas.util.HeartbeatUtil;
 
 //The @Path JAX-RS annotation tells the server to look at this controller if anyone hits up "http://serverAddress/Heartbeat" 
@@ -19,8 +22,13 @@ public class HeartbeatRest {
 	/**
 	 * see {@link HeartbeatUtil#receiveHeartbeat(String, String)}
 	 */
-	@GET @Path("{serverId}")
-	public String receiveHeartbeat(@PathParam("serverId") String serverId, @Context HttpServletRequest request) {
-		return util.receiveHeartbeat(serverId, request.getRemoteHost());
+	@GET 
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{serverId}")
+	public HeartbeatResponse receiveHeartbeat(@PathParam("serverId") String serverId, @Context HttpServletRequest request) {
+		//return util.receiveHeartbeat(serverId, request.getRemoteHost());
+		return new HeartbeatResponse();
 	}
 }
+
+
