@@ -1,9 +1,8 @@
 package com.asdco.nas.util;
 
-import javax.json.Json;
-import javax.json.JsonReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.commons.io.IOUtils;
+
 
 public class JsonUtil {
 
@@ -13,7 +12,23 @@ public class JsonUtil {
 	}
 	
 	public static <T> T fromJsonString(String jsonString, Class<T> expectedClass){
-		JsonReader reader = Json.createReader(IOUtils.toInputStream(jsonString));
-		return null;
+		
+
+        byte[] jsonData = jsonString.getBytes();
+         
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        T object;
+        try {
+        	object = objectMapper.readValue(jsonData, expectedClass);
+			return object;
+		} catch (Exception e) {
+		throw new RuntimeException(e);
+		}
+		
+		
+		
+		
 	}
 }

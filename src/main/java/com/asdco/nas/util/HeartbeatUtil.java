@@ -30,24 +30,13 @@ public class HeartbeatUtil {
 	public String receiveHeartbeat(String serverId, String visibleAddress) {
 		Calendar logDate = logHeartbeat(serverId, visibleAddress);
 		 long l = Long.parseLong(serverId);
-		/**Get # of cmds for serverId as numOfCmds\
-		 * First need to post cmds to the DB
-		**/
-		//return "Message received for server " + serverId + " from " + visibleAddress + " on " + logDate.getTime() + ". Number of commands: "+CommandStatusUtil.getNumberOfCommands(l);
 		 return ""+CommandStatusUtil.getNumberOfCommands(l);
 	}
 
 	private Calendar logHeartbeat(String serverId, String visibleAddress) {
-		//create a new heartbeat log entry
 		HeartbeatLog entry = new HeartbeatLog();
-
-		//add the server id that was provided by the client in the GET request e
 		entry.setServerId(serverId);
-
-		//add the address that the request came from
 		entry.setVisibleIP(visibleAddress);
-
-		//save it to the database
 		jpaUtil.persist(entry);
 		
 		return entry.getLogDate();

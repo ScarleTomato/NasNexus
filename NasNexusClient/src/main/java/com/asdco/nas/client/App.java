@@ -1,6 +1,9 @@
 package com.asdco.nas.client;
 
- 
+import com.asdco.nas.dto.HeartbeatResponse;
+import com.asdco.nas.util.JsonUtil;
+
+
 
 public class App {
 
@@ -16,14 +19,16 @@ public class App {
 		new HttpClient().get("http://localhost:8080/NasNexus/Command/next?server=Server1");
 		new HttpClient().get("http://localhost:8080/NasNexus/Command/list?serverId=10");
 		String line = new HttpClient().get("http://localhost:8080/NasNexus/Heartbeat/10");
-		//JsonUtil.fromJsonString(line,HeartbeatResponse);
+		HeartbeatResponse response = JsonUtil.fromJsonString(line,HeartbeatResponse.class);
+		
 		//Else not 0 get next command till Number of commands is 0
 			//Before running a command get (recived command)time stamp and send to nexus
 			//Run command
 			//Get (commandComplete) time stamp and send to nexus
-		  
+		  System.out.println("Done");
 		 
 		
 		
 	}
+
 }

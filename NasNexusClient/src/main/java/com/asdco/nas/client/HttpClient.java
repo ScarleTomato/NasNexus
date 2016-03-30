@@ -25,10 +25,12 @@ public class HttpClient {
 	public String get(String url) {
 		HttpUriRequest httpRequest = new HttpGet(url);
 		DefaultHttpClient httpClient = new DefaultHttpClient();
+		
 		HttpResponse response = execute(httpRequest);
-		System.out.println(toString(response.getEntity()));
+		String line = (toString(response.getEntity()));
+		//System.out.println(line);
 		//JsonUtil.fromJsonString(response, HeartbeatLog);
-		return toString(response.getEntity());
+		return line;
 	}
 	
 	public String put(String url, Serializable object) {

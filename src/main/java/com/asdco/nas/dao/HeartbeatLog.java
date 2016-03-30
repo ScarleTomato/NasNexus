@@ -1,13 +1,19 @@
 package com.asdco.nas.dao;
 
-import java.util.Calendar; 
+import java.util.Calendar;  
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.Version;
+
+@NamedQueries({
+	//@NamedQuery(name="HeartbeatLog.findByServerId", query="select s from heartbeatlog s where s.")
+	//need to finish, find out how to select last on table. 
+})
 
 @Entity
 public class HeartbeatLog {
