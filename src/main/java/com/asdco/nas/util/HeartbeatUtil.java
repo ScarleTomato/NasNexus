@@ -1,6 +1,7 @@
 package com.asdco.nas.util;
 
-import java.util.Calendar; 
+import java.util.Calendar;
+import java.util.Objects;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import javax.inject.Inject;
 
 import com.asdco.nas.dao.CommandStatus;
 import com.asdco.nas.dao.HeartbeatLog;
+import com.asdco.nas.dao.NasServer;
 import com.asdco.nas.dto.HeartbeatResponse;
 
 @ApplicationScoped
@@ -17,6 +19,8 @@ public class HeartbeatUtil {
 	JpaUtil jpaUtil;
 	@Inject
 	CommandStatusUtil CommandStatusUtil;
+	@Inject
+	NasServerUtil nasServerUtil;
 
 	/**
 	 * Receive a heart beat from a NAS server and let the server know if there
@@ -27,25 +31,31 @@ public class HeartbeatUtil {
 	 * @return a command
 	 */
 
-	public String receiveHeartbeat(String serverId, String visibleAddress) {
-		Calendar logDate = logHeartbeat(serverId, visibleAddress);
-		 long l = Long.parseLong(serverId);
-		 return ""+CommandStatusUtil.getNumberOfCommands(l);
+	public HeartbeatResponse receiveHeartbeat(String name, String visibleAddress) {
+		NasServer server = nasServerUtil.getServerByName(name);
+		Long serverId = server.getId();
+		HeartbeatResponse bean = logHeartbeat(serverId, visibleAddress);
+		 bean.setNumOfCommands(CommandStatusUtil.getNumberOfCommands(serverId));
+		 bean.setNextCommand(CommandStatusUtil.getNextCommandId(name));
+		 return bean;
 	}
 
-	private Calendar logHeartbeat(String serverId, String visibleAddress) {
+	private HeartbeatResponse logHeartbeat(Long serverId, String visibleAddress) {
 		HeartbeatLog entry = new HeartbeatLog();
 		entry.setServerId(serverId);
 		entry.setVisibleIP(visibleAddress);
 		jpaUtil.persist(entry);
-		
-		return entry.getLogDate();
+		HeartbeatResponse bean = buildBean(entry);
+		return bean;
 	}
 	
-	public HeartbeatResponse buildBean(HeartbeatLog c){
+	public static HeartbeatResponse buildBean(HeartbeatLog c){
 		HeartbeatResponse b = new HeartbeatResponse();
 		b.setId(c.getId());
 		b.setLogDate(c.getLogDate());
+		b.setServerId(c.getServerId());
+		b.setVisibleIP(c.getVisibleIP());
+		
 		
 		return b;
 	}

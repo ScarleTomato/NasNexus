@@ -25,11 +25,13 @@ public class HeartbeatRest {
 	 */
 	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{serverId}")
-	public HeartbeatResponse receiveHeartbeat(@PathParam("serverId") String serverId, @Context HttpServletRequest request) {
-		util.receiveHeartbeat(serverId, request.getRemoteHost());
-		//HeartbeatResponse bean = HeartbeatUtil.buildBean();// Need to build query last heartbeatLog by server id
-		return null;
+	@Path("{serverName}")
+	public HeartbeatResponse receiveHeartbeat(@PathParam("serverName") String serverName, @Context HttpServletRequest request) {
+		
+		HeartbeatResponse bean = util.receiveHeartbeat(serverName, request.getRemoteHost());
+		
+		//bean = HeartbeatUtil.buildBean();// Need to build query last heartbeatLog by server id
+		return bean;//pause here
 	}
 }
 

@@ -20,6 +20,8 @@ public class HeartbeatResponse {
 	
 	Long nextCommand = null;
 
+	
+
 	public Long getId() {
 		return id;
 	}

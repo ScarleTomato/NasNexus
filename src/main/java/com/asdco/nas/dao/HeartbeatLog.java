@@ -1,6 +1,6 @@
 package com.asdco.nas.dao;
 
-import java.util.Calendar;  
+import java.util.Calendar;   
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,6 @@ public class HeartbeatLog {
 	@Column
 	String serverId;
 
-	//comment
 	@Column
 	String visibleIP;
 
@@ -54,8 +53,8 @@ public class HeartbeatLog {
 		return serverId;
 	}
 
-	public void setServerId(String serverId) {
-		this.serverId = serverId;
+	public void setServerId(Long serverId) {
+		this.serverId = String.valueOf(serverId);
 	}
 
 	public String getVisibleIP() {

@@ -23,12 +23,15 @@ public class HttpClient {
 	DefaultHttpClient httpClient = new DefaultHttpClient();
 	
 	public String get(String url) {
+		System.out.println(url);
 		HttpUriRequest httpRequest = new HttpGet(url);
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		
 		HttpResponse response = execute(httpRequest);
 		String line = (toString(response.getEntity()));
-		//System.out.println(line);
+		System.out.println("flag 2");
+		
+		System.out.println(line);
 		//JsonUtil.fromJsonString(response, HeartbeatLog);
 		return line;
 	}

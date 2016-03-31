@@ -51,12 +51,6 @@ public class CommandStatusRest {
 		return util.getNextCommand(serverName);
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/completedNext")
-	public String completedNext(@QueryParam("Command#") Long commandId){
-		return util.complete(commandId);
-		
-	}
+
 
 }

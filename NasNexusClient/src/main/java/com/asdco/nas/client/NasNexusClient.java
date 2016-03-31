@@ -6,8 +6,9 @@ public class NasNexusClient {
 	HttpClient httpClient = new HttpClient();
 	
 	public int sendHeartbeat() {
-		System.out.println("Sending heartbeat...");
-		System.out.println(httpClient.get("http://localhost:8080/NasNexus/Heartbeat/10"));
+		String serverName = "Server1";
+		System.out.println("Sending heartbeat from "+serverName+" ...");
+		System.out.println(httpClient.get("http://localhost:8080/NasNexus/Heartbeat/"+serverName));
 		return 0;
 	}
 }

@@ -62,17 +62,21 @@ public class CommandStatusUtil {
 		List <CommandStatus> listOfCommands = getCommandList(serverId);
 		if(listOfCommands.size() != 0){
 		CommandStatus nextCommand = listOfCommands.get(0);
-		//return "next command for "+serverName+" is: "+nextCommand.getCmdId()+". Unique command Id is: "+nextCommand.getId();}
-		return nextCommand.getCmdId()+":"+nextCommand.getId();}
+		return String.valueOf(nextCommand.getCmdId());}
 		else{return "No current next command";}
 		
 	}
 	
-	public String complete(Long commandId){
-		return ""; 
-		
-		
+	public Long getNextCommandId(String serverName){
+		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
+		Long serverId = affectedServer.getId();
+		List <CommandStatus> listOfCommands = getCommandList(serverId);
+		if(listOfCommands.size() != 0){
+		CommandStatus nextCommand = listOfCommands.get(0);
+		return nextCommand.getId();}
+		else{return null;}
 	}
+	
 	public CommandStatusResponse buildBean(CommandStatus c){
 		CommandStatusResponse b = new CommandStatusResponse();
 		b.setId(c.getId());
