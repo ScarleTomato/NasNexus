@@ -30,8 +30,8 @@ public class HeartbeatRest {
 		
 		HeartbeatResponse bean = util.receiveHeartbeat(serverName, request.getRemoteHost());
 		
-		//bean = HeartbeatUtil.buildBean();// Need to build query last heartbeatLog by server id
-		return bean;//pause here
+		
+		return bean;
 	}
 }
 

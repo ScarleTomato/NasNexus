@@ -1,6 +1,8 @@
 package com.asdco.nas.util;
 
+import java.lang.reflect.Array; 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,6 +20,7 @@ public class HeartbeatUtil {
 	@Inject
 	JpaUtil jpaUtil;
 	@Inject
+	 //changed to static to allow 
 	CommandStatusUtil CommandStatusUtil;
 	@Inject
 	NasServerUtil nasServerUtil;
@@ -36,7 +39,6 @@ public class HeartbeatUtil {
 		Long serverId = server.getId();
 		HeartbeatResponse bean = logHeartbeat(serverId, visibleAddress);
 		 bean.setNumOfCommands(CommandStatusUtil.getNumberOfCommands(serverId));
-		 bean.setNextCommand(CommandStatusUtil.getNextCommandId(name));
 		 return bean;
 	}
 
@@ -56,6 +58,7 @@ public class HeartbeatUtil {
 		b.setServerId(c.getServerId());
 		b.setVisibleIP(c.getVisibleIP());
 		
+
 		
 		return b;
 	}

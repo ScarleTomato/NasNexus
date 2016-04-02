@@ -1,5 +1,6 @@
 package com.asdco.nas.rest;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.asdco.nas.dao.CommandStatus;
 import com.asdco.nas.util.CommandStatusUtil;
 import com.asdco.nas.util.NasServerUtil;
 import com.asdco.nas.util.ServerCommandUtil;
@@ -40,7 +42,7 @@ public class CommandStatusRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/list")
-	public List getCommands(@QueryParam("serverId") Long serverId){
+	public List<CommandStatus> getCommands(@QueryParam("serverId") Long serverId){
 		return util.getCommandList(serverId);
 	}
 
@@ -48,7 +50,7 @@ public class CommandStatusRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/next")
 	public String next(@QueryParam("server") String serverName){
-		return util.getNextCommand(serverName);
+		return util.getNextSet(serverName);
 	}
 
 

@@ -1,26 +1,19 @@
 package com.asdco.nas.dto;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 
 public class HeartbeatResponse {
-	
 
 	Long id;
 
-
 	Calendar logDate;
-
 
 	String serverId;
 
-
 	String visibleIP;
-	
-	Long numOfCommands;
-	
-	Long nextCommand = null;
 
-	
+	Long numOfCommands;
 
 	public Long getId() {
 		return id;
@@ -62,13 +55,9 @@ public class HeartbeatResponse {
 		this.numOfCommands = numOfCommands;
 	}
 
-	public Long getNextCommand() {
-		return nextCommand;
+	public String info() {
+		return "Id :" + id + " LogDate : no show  ServerId :" + serverId + " Ip :" + visibleIP + " Number ofCommands :"
+				+ numOfCommands;
 	}
-
-	public void setNextCommand(Long nextCommand) {
-		this.nextCommand = nextCommand;
-	}
-
 
 }
