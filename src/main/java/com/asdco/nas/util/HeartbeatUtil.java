@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import com.asdco.nas.dao.CommandStatus;
 import com.asdco.nas.dao.HeartbeatLog;
 import com.asdco.nas.dao.NasServer;
-import com.asdco.nas.dto.HeartbeatResponse;
+import com.asdco.nas.dto.HeartbeatBean;
 
 @ApplicationScoped
 public class HeartbeatUtil {
@@ -34,25 +34,25 @@ public class HeartbeatUtil {
 	 * @return a command
 	 */
 
-	public HeartbeatResponse receiveHeartbeat(String name, String visibleAddress) {
+	public HeartbeatBean receiveHeartbeat(String name, String visibleAddress) {
 		NasServer server = nasServerUtil.getServerByName(name);
 		Long serverId = server.getId();
-		HeartbeatResponse bean = logHeartbeat(serverId, visibleAddress);
+		HeartbeatBean bean = logHeartbeat(serverId, visibleAddress);
 		 bean.setNumOfCommands(CommandStatusUtil.getNumberOfCommands(serverId));
 		 return bean;
 	}
 
-	private HeartbeatResponse logHeartbeat(Long serverId, String visibleAddress) {
+	private HeartbeatBean logHeartbeat(Long serverId, String visibleAddress) {
 		HeartbeatLog entry = new HeartbeatLog();
 		entry.setServerId(serverId);
 		entry.setVisibleIP(visibleAddress);
 		jpaUtil.persist(entry);
-		HeartbeatResponse bean = buildBean(entry);
+		HeartbeatBean bean = buildBean(entry);
 		return bean;
 	}
 	
-	public static HeartbeatResponse buildBean(HeartbeatLog c){
-		HeartbeatResponse b = new HeartbeatResponse();
+	public static HeartbeatBean buildBean(HeartbeatLog c){
+		HeartbeatBean b = new HeartbeatBean();
 		b.setId(c.getId());
 		b.setLogDate(c.getLogDate());
 		b.setServerId(c.getServerId());

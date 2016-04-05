@@ -2,40 +2,46 @@ package com.asdco.nas.dao;
 
 import java.util.Calendar;
 
-
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @NamedQueries({
-	@NamedQuery(name="CommandStatus.findByNasServerId", query="select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0")
+		@NamedQuery(name = "CommandStatus.findByNasServerId", query = "select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0")
 
 })
 
 public class CommandStatus {
 	@Id
 	@Column(insertable = false, updatable = false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	
+
 	@Column
-	Long NasServerId; 
-	
-	@Column
-	Long CmdId;
+	Long NasServerId;
+
+	//@Column
+//	Long CmdId;
+
+	@JoinColumn(name="CmdId")
+	@ManyToOne(fetch=FetchType.EAGER)
+	ServerCommand serverCommand;
 	
 	@Column
 	int CmdIsDone;
-	
+
 	@Column
 	Calendar CmdCreationDate;
-	
+
 	@Column
 	Calendar ServerRetrievedCmd;
-	
+
 	@Column
 	Calendar ServerCompleatedCmd;
 
@@ -55,13 +61,13 @@ public class CommandStatus {
 		NasServerId = nasServerId;
 	}
 
-	public Long getCmdId() {
-		return CmdId;
-	}
-
-	public void setCmdId(Long cmdId) {
-		CmdId = cmdId;
-	}
+//	public Long getCmdId() {
+//		return CmdId;
+//	}
+//
+//	public void setCmdId(Long cmdId) {
+//		CmdId = cmdId;
+//	}
 
 	public int getCmdIsDone() {
 		return CmdIsDone;
@@ -95,6 +101,12 @@ public class CommandStatus {
 		ServerCompleatedCmd = serverCompleatedCmd;
 	}
 
+	public ServerCommand getServerCommand() {
+		return serverCommand;
+	}
 
+	public void setServerCommand(ServerCommand serverCommand) {
+		this.serverCommand = serverCommand;
+	}
 
 }

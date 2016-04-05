@@ -2,14 +2,17 @@ package com.asdco.nas.dao;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -51,6 +54,9 @@ public class ServerCommand implements Serializable{
 
 	@Column
 	String description;
+	
+	@OneToMany(mappedBy="serverCommand")
+	List<CommandStatus> statusList;
 	
 	public Long getId() {
 		return id;

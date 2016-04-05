@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import com.asdco.nas.dao.CommandStatus;
 import com.asdco.nas.dao.NasServer;
 import com.asdco.nas.dao.ServerCommand;
-import com.asdco.nas.dto.CommandStatusResponse;
+import com.asdco.nas.dto.CommandStatusBean;
 
 public class CommandStatusUtil {
 
@@ -26,7 +26,7 @@ public class CommandStatusUtil {
 	ServerCommandUtil serverCommandUtil;
 
 	@Inject
-	CommandStatusResponse CommandStatusResponse;
+	CommandStatusBean CommandStatusResponse;
 
 	public String registerCommandStatus(CommandStatus commandToRegister) {
 		jpaUtil.persist(commandToRegister);
@@ -39,6 +39,10 @@ public class CommandStatusUtil {
 		commandsForServer.put("ServerId", ServerId);
 		commandList = jpaUtil.executeGetNamedQuery("CommandStatus.findByNasServerId", commandsForServer,
 				CommandStatus.class);
+		CommandStatus oldCmd = commandList.get(0);
+		Calendar timeStamp = new GregorianCalendar();
+		oldCmd.setServerRetrievedCmd(timeStamp);
+		jpaUtil.merge(oldCmd);
 		return commandList;
 	}
 
@@ -51,55 +55,56 @@ public class CommandStatusUtil {
 		NasServer affectedServer = nasServerUtil.getServerByName(server);
 		ServerCommand command = serverCommandUtil.getCommandByName(commandName);
 		CommandStatus newCommand = new CommandStatus();
-		newCommand.setCmdId(command.getId());
+		newCommand.setServerCommand(command);
+		//newCommand.setCmdId(command.getId());
 		Calendar calendar = new GregorianCalendar();
 		newCommand.setCmdCreationDate(calendar);
 		newCommand.setNasServerId(affectedServer.getId());
 		return registerCommandStatus(newCommand);
 	}
 
-	public String getNextSet(String serverName){
-		Long[] cmdSet = new Long[2]; 
-		cmdSet[0]=getNextCommandId(serverName);
-		cmdSet[1]=getNextCommand(serverName);
-		return String.valueOf(cmdSet);
-	}
+//	public String getNextSet(String serverName){
+//		String[] cmdSet = new String[2]; 
+//		cmdSet[0]=String.valueOf(getNextCommandId(serverName));
+//		cmdSet[1]=String.valueOf(getNextCommand(serverName));
+//		 String data = cmdSet[0]+","+cmdSet[1];
+//		 return data;
+//	}
 	
-	public Long getNextCommand(String serverName) {
+//	public Long getNextCommand(String serverName) {
+//		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
+//		Long serverId = affectedServer.getId();
+//		List<CommandStatus> listOfCommands = getCommandList(serverId);
+//		if (listOfCommands.size() != 0) {
+//			CommandStatus nextCommand = listOfCommands.get(0);
+//			return nextCommand.getCmdId();
+//		} else {
+//			return null;
+//		}
+//
+//	}
+//
+
+	public CommandStatusBean getNextCommandStatus(String serverName) {
 		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
-		Long serverId = affectedServer.getId();
-		List<CommandStatus> listOfCommands = getCommandList(serverId);
+		List<CommandStatus> listOfCommands = getCommandList(affectedServer.getId());
 		if (listOfCommands.size() != 0) {
 			CommandStatus nextCommand = listOfCommands.get(0);
-			return nextCommand.getCmdId();
-		} else {
-			return null;
-		}
-
-	}
-//Flag
-	public Long getNextCommandId(String serverName) {
-		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
-		Long serverId = affectedServer.getId();
-		List<CommandStatus> listOfCommands = getCommandList(serverId);
-		if (listOfCommands.size() != 0) {
-			CommandStatus nextCommand = listOfCommands.get(0);
-			return nextCommand.getId();
-		} else {
-			return null;
+			CommandStatusBean b = buildCommandStatusBean(nextCommand);
+			return b;
+		}else{
+		return null;
 		}
 	}
 
-	public CommandStatusResponse buildBean(CommandStatus c) {
-		CommandStatusResponse b = new CommandStatusResponse();
+	public CommandStatusBean buildCommandStatusBean(CommandStatus c) {
+		CommandStatusBean b = new CommandStatusBean();
 		b.setId(c.getId());
 		b.setNasServerId(c.getNasServerId());
-		b.setCmdId(c.getCmdId());
-		b.setCmdIsDone(c.getCmdIsDone());
 		b.setCmdCreationDate(c.getCmdCreationDate());
-		b.setServerRetrievedCmd(c.getServerRetrievedCmd());
-		b.setServerCompleatedCmd(c.getServerCompleatedCmd());
-
+		ServerCommand rootCmd = c.getServerCommand();
+		b.setCmdId(rootCmd.getId());
+		
 		return b;
 	}
 

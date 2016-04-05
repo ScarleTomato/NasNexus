@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.asdco.nas.dto.HeartbeatResponse;
+import com.asdco.nas.dto.HeartbeatBean;
 import com.asdco.nas.util.HeartbeatUtil;
 import com.asdco.nas.dao.HeartbeatLog;
 
@@ -26,12 +26,9 @@ public class HeartbeatRest {
 	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{serverName}")
-	public HeartbeatResponse receiveHeartbeat(@PathParam("serverName") String serverName, @Context HttpServletRequest request) {
+	public HeartbeatBean receiveHeartbeat(@PathParam("serverName") String serverName, @Context HttpServletRequest request) {
 		
-		HeartbeatResponse bean = util.receiveHeartbeat(serverName, request.getRemoteHost());
-		
-		
-		return bean;
+		return util.receiveHeartbeat(serverName, request.getRemoteHost());
 	}
 }
 

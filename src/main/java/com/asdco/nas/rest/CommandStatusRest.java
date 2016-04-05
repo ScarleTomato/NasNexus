@@ -1,6 +1,5 @@
 package com.asdco.nas.rest;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -50,7 +49,7 @@ public class CommandStatusRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/next")
 	public String next(@QueryParam("server") String serverName){
-		return util.getNextSet(serverName);
+		return String.valueOf(util.getNextCommandStatus(serverName));
 	}
 
 

@@ -2,7 +2,7 @@ package com.asdco.nas.dto;
 
 import java.util.Calendar;
 
-public class NasServerResponse {
+public class NasServerBean {
 	Long id;
 
 	String name;

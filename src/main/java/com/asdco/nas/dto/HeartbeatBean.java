@@ -1,9 +1,8 @@
 package com.asdco.nas.dto;
 
-import java.lang.reflect.Array;
 import java.util.Calendar;
 
-public class HeartbeatResponse {
+public class HeartbeatBean {
 
 	Long id;
 

@@ -73,4 +73,14 @@ public class JpaUtil {
 		}
 		return query.getResultList();
 	}
+	
+	public void merge(Object entity) {
+		if (entity instanceof Collection) {
+			for (Object object : (Collection<?>) entity) {
+				em.merge(object);
+			}
+		} else {
+			em.merge(entity);
+		}
+	}
 }
