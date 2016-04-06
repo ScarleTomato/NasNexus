@@ -1,6 +1,6 @@
 package com.asdco.nas.rest;
 
-import java.util.List;
+import java.util.List; 
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -10,6 +10,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.asdco.nas.dao.CommandStatus;
+import com.asdco.nas.dto.CommandStatusBean;
 import com.asdco.nas.util.CommandStatusUtil;
 import com.asdco.nas.util.NasServerUtil;
 import com.asdco.nas.util.ServerCommandUtil;
@@ -24,13 +25,6 @@ public class CommandStatusRest {
 	
 	@Inject
 	ServerCommandUtil serverCommandUtil;
-	/**
-	 * add cmd for server
-	 * get cmd list (all) for server
-	 * get cmd list (active) for server
-	 * get cmd list (done) for server
-	 * get list of servers with cmds / where cmdIsDone == 0
-	 */
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -45,13 +39,27 @@ public class CommandStatusRest {
 		return util.getCommandList(serverId);
 	}
 
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/update/done")
+	public CommandStatusBean updateCommandStatus(@QueryParam("statusId") Long id,@QueryParam("servername")String serverName){
+		return util.updateCommandStatus(id, serverName);
+		
+		
+		
+		
+		//return bean;
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/next")
-	public String next(@QueryParam("server") String serverName){
-		return String.valueOf(util.getNextCommandStatus(serverName));
+	public CommandStatusBean next(@QueryParam("server") String serverName){
+		return util.getNextCommandStatus(serverName);
 	}
-
+	
+	
 
 
 }

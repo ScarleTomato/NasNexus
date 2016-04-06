@@ -5,9 +5,16 @@ import java.util.GregorianCalendar;
 
 public class ClientUtil {
 	
-	public static String runCommand(Long cmdId){
+	public static int runCommand(Long cmdId){
+		int isDone =0;
+		try {
+			//run command
+			isDone=1;
+			return isDone;
+		}catch (Exception e){
+			throw new RuntimeException(e);
+		}
 		
-		return "Blank message";
 	}
 
 

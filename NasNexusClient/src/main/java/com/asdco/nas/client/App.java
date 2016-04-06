@@ -8,7 +8,7 @@ public class App {
 		NasNexusClient nasNexusClient= new NasNexusClient();
 		System.out.println("Getting bean...");
 		nasNexusClient.sendHeartbeat();
-		
+		System.out.println("App is done running.");
 		
 		
 		

@@ -13,8 +13,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @NamedQueries({
-		@NamedQuery(name = "CommandStatus.findByNasServerId", query = "select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0")
-
+		@NamedQuery(name = "CommandStatus.findByNasServerId", query = "select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0"),
+		@NamedQuery(name = "CommandStatus.findById", query = "select s from CommandStatus s where s.id=:id")
+		
 })
 
 public class CommandStatus {
@@ -26,13 +27,13 @@ public class CommandStatus {
 	@Column
 	Long NasServerId;
 
-	//@Column
-//	Long CmdId;
+	// @Column
+	// Long CmdId;
 
-	@JoinColumn(name="CmdId")
-	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name = "CmdId")
+	@ManyToOne(fetch = FetchType.EAGER)
 	ServerCommand serverCommand;
-	
+
 	@Column
 	int CmdIsDone;
 
@@ -60,14 +61,6 @@ public class CommandStatus {
 	public void setNasServerId(Long nasServerId) {
 		NasServerId = nasServerId;
 	}
-
-//	public Long getCmdId() {
-//		return CmdId;
-//	}
-//
-//	public void setCmdId(Long cmdId) {
-//		CmdId = cmdId;
-//	}
 
 	public int getCmdIsDone() {
 		return CmdIsDone;

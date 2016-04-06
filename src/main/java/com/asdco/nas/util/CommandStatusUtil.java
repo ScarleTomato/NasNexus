@@ -1,11 +1,10 @@
 package com.asdco.nas.util;
 
-import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import static java.lang.Math.toIntExact;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,13 +38,13 @@ public class CommandStatusUtil {
 		commandsForServer.put("ServerId", ServerId);
 		commandList = jpaUtil.executeGetNamedQuery("CommandStatus.findByNasServerId", commandsForServer,
 				CommandStatus.class);
-		CommandStatus oldCmd = commandList.get(0);
-		Calendar timeStamp = new GregorianCalendar();
-		oldCmd.setServerRetrievedCmd(timeStamp);
-		jpaUtil.merge(oldCmd);
 		return commandList;
 	}
-
+	public CommandStatus getSingleCommand(Long id){
+		return jpaUtil.executeGetSingleResult("CommandStatus.findById", CommandStatus.class, "id",id);
+	}
+	
+	
 	public long getNumberOfCommands(Long serverId) {
 		List<CommandStatus> list = getCommandList(serverId);
 		return list.size();
@@ -56,45 +55,37 @@ public class CommandStatusUtil {
 		ServerCommand command = serverCommandUtil.getCommandByName(commandName);
 		CommandStatus newCommand = new CommandStatus();
 		newCommand.setServerCommand(command);
-		//newCommand.setCmdId(command.getId());
 		Calendar calendar = new GregorianCalendar();
 		newCommand.setCmdCreationDate(calendar);
 		newCommand.setNasServerId(affectedServer.getId());
 		return registerCommandStatus(newCommand);
 	}
 
-//	public String getNextSet(String serverName){
-//		String[] cmdSet = new String[2]; 
-//		cmdSet[0]=String.valueOf(getNextCommandId(serverName));
-//		cmdSet[1]=String.valueOf(getNextCommand(serverName));
-//		 String data = cmdSet[0]+","+cmdSet[1];
-//		 return data;
-//	}
-	
-//	public Long getNextCommand(String serverName) {
-//		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
-//		Long serverId = affectedServer.getId();
-//		List<CommandStatus> listOfCommands = getCommandList(serverId);
-//		if (listOfCommands.size() != 0) {
-//			CommandStatus nextCommand = listOfCommands.get(0);
-//			return nextCommand.getCmdId();
-//		} else {
-//			return null;
-//		}
-//
-//	}
-//
-
 	public CommandStatusBean getNextCommandStatus(String serverName) {
 		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
 		List<CommandStatus> listOfCommands = getCommandList(affectedServer.getId());
+		CommandStatus oldCmd = listOfCommands.get(0);
+		Calendar timeStamp = new GregorianCalendar();
+		oldCmd.setServerRetrievedCmd(timeStamp);
+		jpaUtil.merge(oldCmd);
 		if (listOfCommands.size() != 0) {
 			CommandStatus nextCommand = listOfCommands.get(0);
 			CommandStatusBean b = buildCommandStatusBean(nextCommand);
 			return b;
-		}else{
-		return null;
+		} else {
+			return null;
 		}
+	}
+
+	public CommandStatusBean updateCommandStatus(Long commandStatusId, String serverName) {
+		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
+		List<CommandStatus> listOfCommands = getCommandList(affectedServer.getId());
+		CommandStatus oldCmd = listOfCommands.get(0);
+		oldCmd.setCmdIsDone(1);
+		Calendar timeStamp = new GregorianCalendar();
+		oldCmd.setServerCompleatedCmd(timeStamp);
+		jpaUtil.merge(oldCmd);
+		return getNextCommandStatus(serverName);
 	}
 
 	public CommandStatusBean buildCommandStatusBean(CommandStatus c) {
@@ -104,7 +95,7 @@ public class CommandStatusUtil {
 		b.setCmdCreationDate(c.getCmdCreationDate());
 		ServerCommand rootCmd = c.getServerCommand();
 		b.setCmdId(rootCmd.getId());
-		
+
 		return b;
 	}
 

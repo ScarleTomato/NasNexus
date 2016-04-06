@@ -28,7 +28,6 @@ public class HttpClient {
 		
 		HttpResponse response = execute(httpRequest);
 		String line = (toString(response.getEntity()));
-		//JsonUtil.fromJsonString(response, HeartbeatLog);
 		return line;
 	}
 	

@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQueries({
 	@NamedQuery(name="NasServer.findAll", query="select s from Servers s"),
-	@NamedQuery(name="NasServer.findByName", query="select s from Servers s where s.name=:name"),
-	@NamedQuery(name="NasServer.findById", query="select s from Servers s where s.id=:id")
+	@NamedQuery(name="NasServer.findByName", query="select s from Servers s where s.name=:name")
+	
 })
 @Entity(name="Servers")
 @XmlRootElement

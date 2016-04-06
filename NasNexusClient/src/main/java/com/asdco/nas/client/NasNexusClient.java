@@ -1,6 +1,6 @@
 package com.asdco.nas.client;
 
-import java.sql.Date;
+import java.sql.Date; 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -18,39 +18,26 @@ import com.asdco.nas.util.ClientUtil;
 public class NasNexusClient {
 
 	HttpClient httpClient = new HttpClient();
-
-	/**
-	 * public int sendHeartbeat() { String serverName = "Server1";
-	 * System.out.println("Sending heartbeat from "+serverName+" ...");
-	 * System.out.println(httpClient.get(
-	 * "http://localhost:8080/NasNexus/Heartbeat/"+serverName)); return 0; }
-	 **/
-
-	public String sendHeartbeat() {
+	
+	public void sendHeartbeat() {
 		String name = "Server1";
 		String line = httpClient.get("http://localhost:8080/NasNexus/Heartbeat/"+name);
 		HeartbeatBean r = JsonUtil.fromJsonString(line, HeartbeatBean.class);
 		while (r.getNumOfCommands() > 0) {
-			// get next cmd
 			System.out.println("Getting next command bean....");
 			line = httpClient.get("http://localhost:8080/NasNexus/Command/next?server="+name);
 			CommandStatusBean commandStatusBean = JsonUtil.fromJsonString(line, CommandStatusBean.class);
-
-
-			
-			
-			//httpClient.get("http://localhost:8080/NasNexus/Command/next?server=" + name);
-			// run cmd
+			commandStatusBean.setCmdIsDone(ClientUtil.runCommand(commandStatusBean.getCmdId()));
 			// if no errors notify complete
-			// get and set number of r.serNumberOfCommands
-			
+			if(commandStatusBean.getCmdIsDone()==1){
+				//send confirmation to nexus
+				 httpClient.get("http://localhost:8080/NasNexus/Command/update/done?statusId="+commandStatusBean.getId()+"&serverName="+name);
+					//return number of remaining commands
+				
+			}
 			r.setNumOfCommands(0L);//infinite loop kill switch.
 			
 			
 		}
-		return "Hello world";
-		// String newline = new
-		// HttpClient().get("http://localhost:8080/NasNexus/Command/list?serverId=10");
-		// System.out.println(newline+"Hello world");
 	}
 }
