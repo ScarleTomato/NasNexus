@@ -86,8 +86,8 @@ public class JpaUtil {
 	}
 
 	public <T> T executeGetSingleResult(String queryName, Class<T> resultClass, Object... perameters) {
-
-		return executeGetSingleResult(queryName, createPeramiterMap(perameters), resultClass);
+		
+		return (T) executeGetSingleResult(queryName, createPeramiterMap(perameters), resultClass);
 	}
 
 	public void merge(Object entity) {
@@ -100,29 +100,15 @@ public class JpaUtil {
 		}
 
 	}
-
-public static void main(String[] args) {
-	Map map = new JpaUtil().createPeramiterMap("45",67,"78",23);
-	System.out.println("Hello world");
-}
-
-	private Map<String, Object> createPeramiterMap(Object... listOfPram) {
-		HashMap<String, Object> map = new HashMap<>();
-		Object[] newArray = { "id", 23 };
-		int g = 0;
-		int h = 1;
-		for (int i = 0; i < listOfPram.length; i++) {
-			map.put((String) newArray[g], newArray[h]);
-			g = g + 2;
-			h = h + 2;
+	
+	private Map createPeramiterMap(Object... listOfPram) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < listOfPram.length/2; i++) {
+				map.put((String) listOfPram[i*2], listOfPram[i*2+1]);
+				
+			}
+			return map;
 		}
 
-		/**
-		 * Get thet first object, write it to the map pos1[stringof][pram1]
-		 * pos2[][pram2] pos3[][pram3]
-		 * 
-		 **/
-		return map;
-	}
 
 }

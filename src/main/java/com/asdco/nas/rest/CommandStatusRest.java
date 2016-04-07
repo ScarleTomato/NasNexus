@@ -43,7 +43,7 @@ public class CommandStatusRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/update/done")
-	public CommandStatusBean updateCommandStatus(@QueryParam("statusId") Long id,@QueryParam("servername")String serverName){
+	public Long updateCommandStatus(@QueryParam("statusId") Long id,@QueryParam("serverName")String serverName){
 		return util.updateCommandStatus(id, serverName);
 		
 		

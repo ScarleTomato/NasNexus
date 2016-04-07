@@ -77,15 +77,15 @@ public class CommandStatusUtil {
 		}
 	}
 
-	public CommandStatusBean updateCommandStatus(Long commandStatusId, String serverName) {
+	public Long updateCommandStatus(Long commandStatusId, String serverName) {
 		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
-		List<CommandStatus> listOfCommands = getCommandList(affectedServer.getId());
-		CommandStatus oldCmd = listOfCommands.get(0);
+		//List<CommandStatus> listOfCommands = getCommandList(affectedServer.getId());
+		CommandStatus oldCmd = getSingleCommand(commandStatusId);
 		oldCmd.setCmdIsDone(1);
 		Calendar timeStamp = new GregorianCalendar();
 		oldCmd.setServerCompleatedCmd(timeStamp);
 		jpaUtil.merge(oldCmd);
-		return getNextCommandStatus(serverName);
+		return getNumberOfCommands(affectedServer.getId());
 	}
 
 	public CommandStatusBean buildCommandStatusBean(CommandStatus c) {
