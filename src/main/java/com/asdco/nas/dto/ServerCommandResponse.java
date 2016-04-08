@@ -1,14 +1,9 @@
 package com.asdco.nas.dto;
 
-import java.util.Calendar;
-
-
 public class ServerCommandResponse {
 	Long id;
-	
+
 	String name;
-	
-	Calendar createdDate;
 
 	String description;
 
@@ -28,14 +23,6 @@ public class ServerCommandResponse {
 		this.name = name;
 	}
 
-	public Calendar getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Calendar createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -43,5 +30,5 @@ public class ServerCommandResponse {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 }
