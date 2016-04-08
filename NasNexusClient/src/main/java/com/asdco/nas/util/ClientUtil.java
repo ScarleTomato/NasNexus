@@ -15,7 +15,8 @@ public class ClientUtil {
 
 	public static int runServerCommand(Long cmdId) {
 		int isDone = 0;
-		String fileName = "command" + cmdId;
+		//String fileName = "command" + cmdId;
+		String fileName = "willNotWork";//should not work.....
 		System.out.println("File name = "+ fileName);
 		ServerCommandBean bean = new ServerCommandBean();
 		Properties prop = new Properties();
@@ -28,9 +29,9 @@ public class ClientUtil {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IOException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 		
 		
