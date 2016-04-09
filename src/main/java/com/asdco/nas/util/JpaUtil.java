@@ -87,7 +87,7 @@ public class JpaUtil {
 
 	public <T> T executeGetSingleResult(String queryName, Class<T> resultClass, Object... perameters) {
 
-		return (T) executeGetSingleResult(queryName, createPeramiterMap(perameters), resultClass);
+		return (T) executeGetSingleResult(queryName, createPerameterMap(perameters), resultClass);
 	}
 
 	public void merge(Object entity) {
@@ -101,7 +101,7 @@ public class JpaUtil {
 
 	}
 
-	private Map createPeramiterMap(Object... listOfPram) {
+	private Map<String,Object> createPerameterMap(Object... listOfPram) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		for (int i = 0; i < listOfPram.length / 2; i++) {
 			map.put((String) listOfPram[i * 2], listOfPram[i * 2 + 1]);
