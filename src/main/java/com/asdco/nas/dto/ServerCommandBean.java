@@ -1,6 +1,6 @@
 package com.asdco.nas.dto;
 
-public class ServerCommandResponse {
+public class ServerCommandBean {
 	Long id;
 
 	String name;

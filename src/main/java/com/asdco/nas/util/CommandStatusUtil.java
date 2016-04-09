@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -29,7 +28,7 @@ public class CommandStatusUtil {
 
 	public String registerCommandStatus(CommandStatus commandToRegister) {
 		jpaUtil.persist(commandToRegister);
-		return "Your wish is my command";
+		return "Command added";
 	}
 
 	public List<CommandStatus> getCommandList(Long ServerId) {
@@ -40,11 +39,11 @@ public class CommandStatusUtil {
 				CommandStatus.class);
 		return commandList;
 	}
-	public CommandStatus getSingleCommand(Long id){
-		return jpaUtil.executeGetSingleResult("CommandStatus.findById", CommandStatus.class, "id",id);
+
+	public CommandStatus getSingleCommand(Long id) {
+		return jpaUtil.executeGetSingleResult("CommandStatus.findById", CommandStatus.class, "id", id);
 	}
-	
-	
+
 	public long getNumberOfCommands(Long serverId) {
 		List<CommandStatus> list = getCommandList(serverId);
 		return list.size();
@@ -79,11 +78,18 @@ public class CommandStatusUtil {
 
 	public Long updateCommandStatus(Long commandStatusId, String serverName) {
 		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
-		//List<CommandStatus> listOfCommands = getCommandList(affectedServer.getId());
 		CommandStatus oldCmd = getSingleCommand(commandStatusId);
 		oldCmd.setCmdIsDone(1);
 		Calendar timeStamp = new GregorianCalendar();
 		oldCmd.setServerCompleatedCmd(timeStamp);
+		jpaUtil.merge(oldCmd);
+		return getNumberOfCommands(affectedServer.getId());
+	}
+
+	public Long updateCommandStatusFail(Long commandStatusId, String serverName)  {
+		NasServer affectedServer = nasServerUtil.getServerByName(serverName);
+		CommandStatus oldCmd = getSingleCommand(commandStatusId);
+		oldCmd.setCmdIsDone(3);
 		jpaUtil.merge(oldCmd);
 		return getNumberOfCommands(affectedServer.getId());
 	}

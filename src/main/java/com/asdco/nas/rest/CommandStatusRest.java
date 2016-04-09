@@ -1,6 +1,6 @@
 package com.asdco.nas.rest;
 
-import java.util.List; 
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -19,47 +19,44 @@ import com.asdco.nas.util.ServerCommandUtil;
 public class CommandStatusRest {
 	@Inject
 	CommandStatusUtil util;
-	
+
 	@Inject
 	NasServerUtil nasServerUtil;
-	
+
 	@Inject
 	ServerCommandUtil serverCommandUtil;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String addCommand(@QueryParam("server") String server,@QueryParam("command") String commandName){
-			return util.addCommand(server, commandName); 
+	public String addCommand(@QueryParam("server") String server, @QueryParam("command") String commandName) {
+		return util.addCommand(server, commandName);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/list")
-	public List<CommandStatus> getCommands(@QueryParam("serverId") Long serverId){
+	public List<CommandStatus> getCommands(@QueryParam("serverId") Long serverId) {
 		return util.getCommandList(serverId);
 	}
 
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/update/done")
-	public Long updateCommandStatus(@QueryParam("statusId") Long id,@QueryParam("serverName")String serverName){
+	public Long updateCommandStatus(@QueryParam("statusId") Long id, @QueryParam("serverName") String serverName) {
 		return util.updateCommandStatus(id, serverName);
-		
-		
-		
-		
-		//return bean;
 	}
-	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/update/fail")
+	public Long updateCommandStatusFail(@QueryParam("statusId") Long id, @QueryParam("serverName") String serverName) {
+		return util.updateCommandStatusFail(id, serverName);	
+	}
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/next")
-	public CommandStatusBean next(@QueryParam("server") String serverName){
+	public CommandStatusBean next(@QueryParam("server") String serverName) {
 		return util.getNextCommandStatus(serverName);
 	}
-	
-	
-
 
 }

@@ -52,5 +52,5 @@ public class NasServerResponse {
 	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
-	
+
 }

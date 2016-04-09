@@ -12,17 +12,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 
-@NamedQueries({
-	@NamedQuery(name="NasServer.findAll", query="from Servers")
-})
-@Entity(name="Servers")
+@NamedQueries({ @NamedQuery(name = "NasServer.findAll", query = "from Servers") })
+@Entity(name = "Servers")
 public class NasServer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(insertable = false, updatable = false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
 	@Column

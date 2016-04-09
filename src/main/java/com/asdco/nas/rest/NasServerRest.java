@@ -16,45 +16,38 @@ import com.asdco.nas.util.NasServerUtil;
 
 @Path(value = "/Servers")
 public class NasServerRest {
-	
+
 	private static final String THE_SERVER_ID_FOR = "The server Id for ";
 	@Inject
 	NasServerUtil util;
 	@Inject
 	JpaUtil jpaUtil;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/listAll")
 	public List<NasServer> getAllServers() {
 		return util.getAllServers();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getServerId")
 	public String getServerIdByName(@QueryParam("name") String name) {
-		
-		
+
 		NasServer namedServer = util.getServerByName(name);
 		Long serverId = namedServer.getId();
 		String s = String.valueOf(serverId);
-		
-		return THE_SERVER_ID_FOR+name+" is "+s;
+
+		return THE_SERVER_ID_FOR + name + " is " + s;
 	}
-	
 
-
-	
-	@GET @Path("/register/{serverName}")
+	@GET
+	@Path("/register/{serverName}")
 	public String registerServer(@PathParam("serverName") String name) {
 		NasServer newServer = new NasServer();
 		newServer.setName(name);
 		return util.registerServer(newServer);
 	}
-	
-	
 
-	
-	
 }

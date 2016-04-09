@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 		@NamedQuery(name = "CommandStatus.findByNasServerId", query = "select s from CommandStatus s where s.NasServerId=:ServerId and s.CmdIsDone=0"),
 		@NamedQuery(name = "CommandStatus.findById", query = "select s from CommandStatus s where s.id=:id")
-		
+
 })
 
 public class CommandStatus {
@@ -26,9 +26,6 @@ public class CommandStatus {
 
 	@Column
 	Long NasServerId;
-
-	// @Column
-	// Long CmdId;
 
 	@JoinColumn(name = "CmdId")
 	@ManyToOne(fetch = FetchType.EAGER)

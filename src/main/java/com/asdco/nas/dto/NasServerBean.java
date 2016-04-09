@@ -52,5 +52,5 @@ public class NasServerBean {
 	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
-	
+
 }

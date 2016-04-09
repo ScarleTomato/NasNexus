@@ -26,7 +26,12 @@ public class NasNexusClient {
 				r.setNumOfCommands(Long.valueOf(line));
 
 			}
-
+			if (commandStatusBean.getCmdIsDone() == 3) {//buildABean and pass it as a string
+				line = httpClient.get("http://localhost:8080/NasNexus/Command/update/fail?statusId="
+						+ commandStatusBean.getId() + "&serverName=" + name);
+				r.setNumOfCommands(Long.valueOf(line));
+			
+			}
 		}
 	}
 }

@@ -22,13 +22,12 @@ public class HeartbeatRest {
 	/**
 	 * see {@link HeartbeatUtil#receiveHeartbeat(String, String)}
 	 */
-	@GET 
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{serverName}")
-	public HeartbeatBean receiveHeartbeat(@PathParam("serverName") String serverName, @Context HttpServletRequest request) {
-		
+	public HeartbeatBean receiveHeartbeat(@PathParam("serverName") String serverName,
+			@Context HttpServletRequest request) {
+
 		return util.receiveHeartbeat(serverName, request.getRemoteHost());
 	}
 }
-
-

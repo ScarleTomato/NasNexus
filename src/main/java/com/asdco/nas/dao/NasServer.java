@@ -13,12 +13,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@NamedQueries({
-	@NamedQuery(name="NasServer.findAll", query="select s from Servers s"),
-	@NamedQuery(name="NasServer.findByName", query="select s from Servers s where s.name=:name")
-	
+@NamedQueries({ @NamedQuery(name = "NasServer.findAll", query = "select s from Servers s"),
+		@NamedQuery(name = "NasServer.findByName", query = "select s from Servers s where s.name=:name")
+
 })
-@Entity(name="Servers")
+@Entity(name = "Servers")
 @XmlRootElement
 public class NasServer implements Serializable {
 
@@ -26,7 +25,7 @@ public class NasServer implements Serializable {
 
 	@Id
 	@Column(insertable = false, updatable = false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
 	@Column
@@ -41,7 +40,6 @@ public class NasServer implements Serializable {
 	@Version
 	@Column(insertable = false, updatable = false)
 	Calendar createdDate;
-	
 
 	public Long getId() {
 		return id;
